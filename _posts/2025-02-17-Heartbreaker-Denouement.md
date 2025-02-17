@@ -103,7 +103,7 @@ Next I will create a new `Aggregation based visualization` as a `Data table` to 
 ![](/assets/images/posts/2025-02-17-Heartbreaker-Denouement/03.png)
 We can see a single redirection with `status_code 301` and there is 20 successful `post` requests. Since the `post` requests were successful we need to know more about what happened. The `access.log` won't provide us with anything new so I will go to `error.log` and look around the time those `post` requests were made. Here what we got:
 
-```txt
+```
 [Wed Mar 13 14:03:17.482267 2024] [php7:notice] [pid 399] [client 35.169.66.138:35892] Request: POST /wb-loanapp-tracker.php Input: , referer: http://3.144.237.152/wb-loanapp-tracker.php
 [Wed Mar 13 14:03:21.501887 2024] [php7:notice] [pid 399] [client 35.169.66.138:35892] Request: POST /wb-loanapp-tracker.php Input: , referer: http://3.144.237.152/wb-loanapp-tracker.php
 [Wed Mar 13 14:05:05.451538 2024] [php7:notice] [pid 408] [client 35.169.66.138:42982] Request: POST /wb-loanapp-tracker.php Input: askdjmzxcnqw3e, referer: http://3.144.237.152/wb-loanapp-tracker.php
@@ -114,7 +114,7 @@ We can see a single redirection with `status_code 301` and there is 20 successfu
 From the previous lines we see a keyword `Input` which carry something related to what was sent with the request like `askdjmzxcnqw3e`, `file:///etc/passwd` and `file:///etc/nginx/nginx.conf` but only the last one returned `failed to open stream: No such file or directory` which indicated the previous requested returned what was requested. 
 
 The following lines in `error.log` carry:
-```txt
+```
 [Wed Mar 13 14:06:21.695943 2024] [php7:notice] [pid 412] [client 35.169.66.138:52712] Request: POST /wb-loanapp-tracker.php Input: http://169.254.169.254, referer: http://3.144.237.152/wb-loanapp-tracker.php
 [Wed Mar 13 14:06:30.584637 2024] [php7:notice] [pid 415] [client 35.169.66.138:35750] Request: POST /wb-loanapp-tracker.php Input: http://169.254.169.254/latest, referer: http://3.144.237.152/wb-loanapp-tracker.php
 [Wed Mar 13 14:06:40.887829 2024] [php7:notice] [pid 404] [client 35.169.66.138:41200] Request: POST /wb-loanapp-tracker.php Input: http://169.254.169.254/latest/meta-data, referer: http://3.144.237.152/wb-loanapp-tracker.php

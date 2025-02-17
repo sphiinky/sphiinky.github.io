@@ -1,5 +1,5 @@
 ---
-title: "CyCTF Qualifications Injection forensics walkthrough"
+title: "Cyshield CTF (CyCTF) Qualifications Injection forensics walkthrough"
 date: 2024-11-03 05:59:22 +0300
 categories: [CTF]
 tags: [CTF, Writeup]

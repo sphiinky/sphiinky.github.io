@@ -1,5 +1,5 @@
 ---
-title: "HTB Heartbreaker-Denouement Cloud Challenge Walkthrough"
+title: "HTB Heartbreaker-Denouement Cloud Challenge Walkthrough with ELK"
 date: 2025-02-17 09:52:24 +0300
 categories: [HTB]
 tags: [HTB, Writeup]
@@ -40,7 +40,7 @@ From the tasks and description, we know that a web server has been compromised, 
 
 At the beginning of the challenge you are giving a `HeartBreakerDenouement.zip` which contains: 
 
-```shell
+```bash
 $ ll
 total 2372
 drwxrwxrwx 1 sphinky sphinky    4096 Feb 16 15:01 ./
@@ -50,7 +50,7 @@ drwxrwxrwx 1 sphinky sphinky    4096 Mar 15  2024 AWS/
 ```
 
 `AWS` is the directory containing the cloud trails while `uac-uswebapp00-linux-20240313145552.tar.gz` contains files gathered from the IR team. I will go directly to the server logs at `[root]/var/log/apache2`, we got this:
-```shell
+```bash
 $ ll
 total 2296
 drwxrwxrwx 1 sphinky sphinky    4096 Feb 16 12:22 ./
@@ -60,7 +60,7 @@ drwxrwxrwx 1 sphinky sphinky    4096 Feb 16 12:22 ../
 -rwxrwxrwx 1 sphinky sphinky       0 Mar 12  2024 other_vhosts_access.log
 ```
 I will start with `access.log` and get back to `error.log` later. I will use `fluentbit` which is a lightweight log processor and forwarder to parse and send the `access.log`. Here is the part related to the configuration I used in this challenge:
-```shell
+```bash
 $ sudo cat /etc/fluent-bit/fluent-bit.conf 
 [INPUT]
     Name        tail
@@ -133,7 +133,7 @@ Task 6 requires the name of at least one table of the database, this info could 
 ### Cloud trails: 
 
 I will start by preparing all the cloud trails to send it to `elastic`. In the `AWS` directory I will run those commands to find, extract and aggregate the json files:
-```
+```bash
 $ find . -type f -name "*.gz" -exec sh -c 'gunzip "{}"' \;
 $ find . -name *json -exec cat {} \; > phase1.json
 $ jq -c '.Records[]' phase1.json | jq -s -c 'sort_by(.eventTime)' > phase2.json
@@ -142,7 +142,7 @@ $ cat phase3.json | sort | uniq > final.json
 ```
 
 And for `fluentbit` configuration I will use this (there is already a json parser):
-```
+```bash
 [INPUT]
     Name        tail
     Path        /path/to/final.json

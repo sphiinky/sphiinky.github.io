@@ -43,6 +43,9 @@ image:
 6. [Exfiltration](#exfiltration)
 7. [OSINT](#osint)
 8. [More about Lumma stealer & Detection](#more-about-lumma-stealer--detection)
+
+
+
 ## Scenario
 
 You got this email from your SOC Manager:

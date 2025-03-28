@@ -2,7 +2,7 @@
 title: "Homemade_Lumma Stealer"
 date: 2025-02-21 09:52:24 +0300
 categories: []
-tags: [Writeup]
+tags: [Writeup, we innovate]
 description: WE Innovate Lumma stealer lab analysis.
 
 image:

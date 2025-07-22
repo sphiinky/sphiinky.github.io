@@ -1,5 +1,5 @@
 ---
-title: "ReliableThreat HTB Sherlock writeup"
+title: "HTB ReliableThreat Sherlock"
 date: 2025-07-22 13:05:53 +0300
 categories: [HTB]
 tags: [Writeup, htb sherlocks]

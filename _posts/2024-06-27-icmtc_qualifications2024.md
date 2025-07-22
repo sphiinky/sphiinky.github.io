@@ -2,7 +2,7 @@
 title: "ICMTC Qualifications 2024 Forensics Writeups"
 date: 2024-06-27 13:05:53 +0300
 categories: [CTF]
-tags: [CTF, Writeup]
+tags: [CTF, Writeup, ICMTC]
 description: My approach for solving the qualifications forensics challange.
 image:
   path: /assets/images/posts/2024-06-27-icmtcQal/head.png

@@ -2,7 +2,7 @@
 title: "HTB Heartbreaker-Denouement Cloud Challenge Walkthrough with ELK"
 date: 2025-02-17 09:52:24 +0300
 categories: [HTB]
-tags: [htb sherlocks, Writeup]
+tags: [htb sherlocks, Writeup, ELK]
 
 
 image:

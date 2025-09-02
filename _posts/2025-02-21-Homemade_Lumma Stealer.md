@@ -2,12 +2,21 @@
 title: "Homemade_Lumma Stealer"
 date: 2025-02-21 09:52:24 +0300
 categories: [WE innovate]
-tags: [Writeup, WE innovate]
+tags: [Writeup, WE innovate, ELK, Recorded Video]
 description: WE Innovate Lumma stealer lab analysis.
 
 image:
   path: /assets/images/posts/2025-02-21-Homemade_Lumma Stealer/00.png
 ---
+
+## *Recorded discussion*
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/fZaiERM23Xo" 
+          style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" 
+          frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+  </iframe>
+</div>
 
 
 ## Report Summary

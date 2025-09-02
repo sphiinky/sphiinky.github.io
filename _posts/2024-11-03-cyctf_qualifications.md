@@ -2,7 +2,7 @@
 title: "Cyshield CTF (CyCTF) Qualifications Injection forensics walkthrough"
 date: 2024-11-03 05:59:22 +0300
 categories: [CTF]
-tags: [CTF, Writeup, cyctf]
+tags: [CTF, Writeup, cyctf, Recorded Video]
 description: Walkthrough on how to use text manipulation in WSL to handle huge log files.
 image:
   path: /assets/images/posts/2024-11-03-cyctfQal/cover.png

@@ -2,7 +2,7 @@
 title: "WE Innovate Final Technical Assessment"
 date: 2025-03-28 13:05:53 +0300
 categories: [WE innovate]
-tags: [Writeup, WE innovate]
+tags: [Writeup, WE innovate, ELK]
 description: A malicious attacker aims to disrupt a bank’s operations and exploit sensitive data. You are tasked with investigating the incident and providing a detailed analysis report. Your report should include an overview of the attack, its impact, and a set of detection rules to identify and mitigate similar threats in the future.
 
 image:
